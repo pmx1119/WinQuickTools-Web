@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinQuickTools 官网</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            background-attachment: fixed;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .nav {
+            background-color: rgba(68, 68, 68, 0.5);
+            text-align: center;
+            padding: 10px 0;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+            z-index: 1000;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            display: none;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            max-width: 80%;
+            max-height: 80vh;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            position: fixed;
+            bottom: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .banner {
+            background-image: url('banner.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-image {
+            position: relative;
+            text-align: center;
+            margin-top: -50;
+        }
+
+        .nav-image img {
+            max-width: 100%;
+            height: auto;
+            filter: blur(5px);
+        }
+
+        .modules {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: row;
+            justify-content: center; 
+            align-items: center; 
+            z-index: 10;
+            margin-top: 100px;
+            width: 100%;
+        }
+
+        .reviews{
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 30%;
+            max-height: 80vh;
+            overflow: auto;
+            margin: 0 10px;
+            height: 450px;
+            width: 35%;
+        }
+        .feedback {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 30%;
+            max-height: 80vh;
+            overflow: auto;
+            margin: 0 10px;
+            height: 450px;
+            width: 40%;
+        }
+        .faq{
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 30%;
+            max-height: 80vh;
+            overflow: auto;
+            margin: 0 10px;
+            height: 450px;
+            width: 35%;
+        }
+        .reviews h2, .faq h2, .feedback h2 {
+            margin-top: 0;
+        }
+
+        .reviews form, .faq form, .feedback form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviews label, .faq label, .feedback label {
+            margin-bottom: 5px;
+        }
+
+        .reviews input, .faq input, .feedback input,
+        .reviews textarea, .faq textarea, .feedback textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .reviews button, .faq button, .feedback button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reviews button:hover, .faq button:hover, .feedback button:hover {
+            background-color: #0056b3;
+        }
+        .warning-text {
+            color: red;
+            font-weight: bold;
+        }
+        .user-guide {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>WinQuickTools の官网</h1>
+    </div>
+    <div class="nav">
+        <a href="index.html" onclick="showContent('home')">🏠 首页 🏠</a>
+        <a href="features.html" onclick="showContent('features')">🔍 主要功能 🔍</a>
+        <a href="tutorial.html" onclick="showContent('tutorial')">📝 使用教程 📝</a>
+        <a href="download.html" onclick="showContent('download')">📥 下载📥 </a>
+        <a href="help.html" onclick="showContent('help')">📚 帮助文档 📚</a>
+        <a href="about.html" onclick="showContent('about')">🙏 关于我们 🙏</a>
+    </div>
+    <div class="nav-image">
+        <img src="1.png" alt="Navigation Image">
+        <!-- 内容部分 -->
+        <div class="content" id="home">
+            <h2>👋hi，欢迎来到 WinQuickTools 的世界！👋</h2>
+            <p>WinQuickTools 是一个超酷的命令行工具，它能让你的电脑生活变得更简单、更有趣。不管你是想管理文件、查看系统信息，还是做点网络工具操作，WinQuickTools 都能帮你搞定。😎</p>
+        </div>
+    <!-- 模块部分 -->
+    <div class="modules">
+        <!-- 用户评价部分 -->
+        <div class="reviews">
+            <h2>用户评价</h2>
+            <div class="review">
+                <h3>d******@sina.com</h3>
+                <p>WinQuickTools 真的非常方便，让我能够快速管理文件和查看系统信息。</p>
+            </div>
+            <div class="review">
+                <h3>b*********@163.com</h3>
+                <p>我非常喜欢 WinQuickTools 的网络工具功能，它帮助我解决了许多网络问题。</p>
+            </div>
+            <div class="review">
+                <h3>s**@qq.com</h3>
+                <p>WinQuickTools 的系统工具功能非常强大，让我能够轻松地优化我的电脑。</p>
+            </div>
+        </div>
+        <!-- 发展历程部分 -->
+        <div class="reviews">
+            <h2>发展历程</h2>
+            <div class="review">
+                <h3>版本 0.1 (2023.5.6)</h3>
+                <p>代号 DQ20230506，第一个版本，没有功能。</p>
+                <p>本版本为初始版本，仅作为项目起点。</p>
+            </div>
+            <div class="review">
+                <h3>版本 1.0 (2023.6.1)</h3>
+                <p>WinQuickTools 初次发布，仅支持命令行操作，包含基本的文件管理和系统信息功能。</p>
+                <p>添加文件复制、移动和删除功能。</p>
+            </div>
+            <div class="review">
+                <h3>版本 1.1 (2023.7.15)</h3>
+                <p>增强网络工具。</p>
+                <p>添加Ping测试、DNS查找和IP地址查询功能（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 1.2 (2023.8.30)</h3>
+                <p>改进文件管理功能。</p>
+                <p>添加文件重命名、查找和替换、文件压缩和解压缩功能（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 1.3 (2023.10.10)</h3>
+                <p>添加系统性能优化建议。</p>
+                <p>实施系统性能优化建议（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 1.4 (2023.11.20)</h3>
+                <p>引入网络工具。</p>
+                <p>添加端口扫描和查询域名信息功能（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 2.0 (2024.1.15)</h3>
+                <p>主要更新，更换架构。</p>
+                <p>完全更换底层架构，提升性能和稳定性。</p>
+            </div>
+            <div class="review">
+                <h3>版本 2.1 (2024.2.28)</h3>
+                <p>改进网络工具。</p>
+                <p>改进IP扫描和查询设备MAC功能（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 2.2 (2024.4.5)</h3>
+                <p>引入硬件相关功能。</p>
+                <p>添加硬件信息显示功能（仅命令行）。</p>
+            </div>
+            <div class="review">
+                <h3>版本 3.0 (2025.1.1)</h3>
+                <p>主要更新，更换架构。</p>
+                <p>完全更换底层架构，提升性能和稳定性。</p>
+            </div>
+            <div class="review">
+                <h3>版本 3.1 (2025.2.15)</h3>
+                <p>引入新网络工具。</p>
+                <p>添加网络速度测试工具（仅命令行）。</p>
+            </div>
+        </div>
+        <div class="faq"> 
+            <h2>常见问题</h2>
+            <div class="question">
+                <h3>Q: WinQuickTools 是什么？</h3>
+                <p>A: WinQuickTools 是一个功能丰富的命令行工具，旨在提供便捷的系统管理和日常操作工具。</p>
+            </div>
+            <div class="question">
+                <h3>Q: 如何下载 WinQuickTools？</h3>
+                <p>A: 您可以从我们的官方网站下载 WinQuickTools 的最新版本。</p>
+            </div>
+            <div class="question">
+                <h3>Q: WinQuickTools 有哪些功能？</h3>
+                <p>A: WinQuickTools 包含文件管理、系统信息、网络工具、系统工具和其他功能。</p>
+            </div>
+            <div class="question">
+                <h3>Q: 为什么会出现 beta 验证？</h3>
+                <p>A: WinQuickTools 在发布正式版本之前，会进行 beta 测试以收集用户反馈并改进产品。如果您在安装或使用 WinQuickTools 时遇到了 beta 验证，这意味着您可能正在使用 beta 版本。</p>
+            </div>
+            <div class="question">
+                <h3>Q: 如何解决 beta 验证？</h3>
+                <p>A: 如果您是 beta 测试用户，您不需要进行任何操作。如果您不想参与 beta 测试，您可以在程序目录下创建一个名为 "not_beta.wqt" 的文件，并在文件中添加一串黄色字符。这将使程序检测到该文件并自动切换到非 beta 模式。请注意，创建该文件会导致 beta 用户自动登录失效。</p>
+            </div>
+            <div class="question">
+                <h3>Q: 程序崩溃了怎么办？</h3>
+                <p>A: 如果 WinQuickTools 程序崩溃，您可以尝试在命令提示符中再次运行 WinQuickTools 并执行相同的操作。在控制台中查看错误代码，并将错误代码发送到我们的反馈邮箱 WinQuickTools@@163.com。我们将尽快回复您并提供解决方案。</p>
+            </div>
+        </div>
+        <div class="reviews">
+            <h2>普通用户指南</h2>
+            <h3>可以做的事</h3>
+            <ul>
+                <li>使用 WinQuickTools 进行日常操作，如文件管理、系统信息查看等。</li>
+                <li>在官方社区分享使用经验。</li>
+                <li>向开发团队提供反馈和建议。</li>
+            </ul>
+            <h3>不能做的事</h3>
+            <ul>
+                <li>尝试非法访问系统文件或执行未授权的系统命令。</li>
+                <li>在程序运行时强制关闭或重启计算机。</li>
+                <li>同时运行多个实例的 WinQuickTools。</li>
+            </ul>
+        </div>
+        <!-- Beta 用户指南模块 -->
+        <div class="reviews">
+            <h2>Beta 用户指南</h2>
+            <h3>可以做的事</h3>
+            <ul>
+                <li>深度体验软件功能，如系统操作、运算、文件管理等，并反馈问题。</li>
+                <li>多维度测试功能，改变输入值和场景，将结果反馈给开发团队。</li>
+                <li>通过官方渠道反馈体验，包括操作步骤、系统环境、问题分析和建议，可附图或视频。</li>
+                <li>协助测试新功能和改进，关注稳定性和兼容性。</li>
+                <li>参与社区讨论与建议，分享使用经验和技巧。</li>
+            </ul>
+            <h3>不能做的事</h3>
+            <ul>
+                <li>严禁利用软件从事非法活动，如侵权、非法访问、网络攻击。<span class="warning-text">否则依法处理并取消资格。</span></li>
+                <li>在 Beta 测试期，不能对软件进行反向工程、破解、篡改或分发副本。</li>
+                <li>禁止使用非法第三方插件或工具，避免影响软件稳定性和安全性。</li>
+                <li>不要破坏测试环境，如修改软件安装目录文件或配置文件。</li>
+                <li>严禁输入恶意数据，防止数据丢失、系统崩溃。</li>
+                <li>不得擅自共享测试数据和环境信息。</li>
+                <li>不在社区发布侮辱、骚扰言论，维护良好交流环境。</li>
+                <li>不要干扰其他用户测试，如恶意占用资源或误导用户。</li>
+                <li>未经允许，不得私自联系开发团队成员。</li>
+                <li>不得绕过用户验证机制获取额外权限。</li>
+                <li>禁止使用自动化脚本刷测试数据。</li>
+                <li>不在未经授权设备上测试。</li>
+                <li>每周至少发一次测试报告，若无 bug 则截取三张清晰的使用图片，按（beta 用户名）（标题）（图片）格式整理，标题要体现测试重点。<span class="warning-text">若两周内无发报告的，删除beta资格。</span></li>
+            </ul>
+        </div>
+        <!-- 反馈入口部分 -->
+        <div class="feedback">
+            <h2>反馈入口</h2>
+            <form id="feedback-form" action="/submit_feedback.py" method="post">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">邮箱：</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">反馈内容：</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                <div id="math-captcha">
+                    <label for="math-answer">请计算以下数学问题：</label>
+                    <span id="math-problem"></span>
+                    <input type="text" id="math-answer" name="math-answer" required>
+                </div>
+                <button type="submit">发送反馈</button>
+            </form>
+        </div>
+        
+    </div>
+    <div class="footer">
+        &copy; 2024 微创工作室WinQuickTools. 保留所有权利。
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+                content.style.opacity = '0';
+            });
+            var targetContent = document.getElementById(sectionId);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                setTimeout(function() {
+                    targetContent.style.opacity = '1';
+                }, 10);
+            }
+        }
+        window.onload = function() {
+            showContent('home');
+            generateMathCaptcha();
+        };
+        function generateMathCaptcha() {
+            var num1 = Math.floor(Math.random() * 10) + 1;
+            var num2 = Math.floor(Math.random() * 10) + 1;
+            var problem = num1 + " + " + num2 + " = ?";
+            document.getElementById('math-problem').textContent = problem;
+        }
+        function validateMathCaptcha() {
+            var num1 = parseInt(document.getElementById('math-problem').textContent.split(' ')[0]);
+            var num2 = parseInt(document.getElementById('math-problem').textContent.split(' ')[2]);
+            var answer = parseInt(document.getElementById('math-answer').value);
+            if (answer === num1 + num2) {
+                return true;
+            } else {
+                alert('数学问题答案错误，请重试。');
+                generateMathCaptcha(); 
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
